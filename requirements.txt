@@ -1,5 +1,6 @@
-osmnx
-networkx
-folium
 streamlit
+osmnx
+folium
 pandas
+networkx
+scipy
