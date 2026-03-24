@@ -8,7 +8,7 @@ import pandas as pd
 
 # Importing our custom routing engine AND database functions
 from src.routing import get_route_astar, get_route_bfs, calculate_route_distance
-from src.database import log_route, get_all_logs
+from src.database import log_route, get_all_logs, init_db
 
 # Page configuration
 st.set_page_config(page_title="Route Optimization Engine", layout="wide")
@@ -16,14 +16,25 @@ st.set_page_config(page_title="Route Optimization Engine", layout="wide")
 st.title("🗺️ Route Optimization Engine")
 st.markdown("Comparing Spatial Graph Search Algorithms: **A*** vs **BFS**")
 
-@st.cache_data
+@st.cache_resource 
 def load_graph_data():
-    """Loads the graph only once and caches it to keep the app fast."""
     base_dir = os.path.dirname(os.path.abspath(__file__))
-    graph_path = os.path.join(base_dir, "data", "universitario_map.graphml")
-    if os.path.exists(graph_path):
-        return ox.load_graphml(graph_path)
-    return None
+    data_dir = os.path.join(base_dir, "data")
+    graph_path = os.path.join(data_dir, "universitario_map.graphml")
+    
+    if not os.path.exists(data_dir):
+        os.makedirs(data_dir)
+    
+    init_db()
+
+    if not os.path.exists(graph_path):
+        with st.spinner("Downloading map data for Goiânia (first time only)..."):
+            place_name = "Setor Universitário, Goiânia, Goiás, Brazil"
+            G = ox.graph_from_place(place_name, network_type='drive')
+            ox.save_graphml(G, graph_path)
+            return G
+    
+    return ox.load_graphml(graph_path)
 
 G = load_graph_data()
 
