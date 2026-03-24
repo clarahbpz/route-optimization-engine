@@ -1,6 +1,6 @@
 # Route Optimization Engine: Spatial Data & Graph Search
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_svg.svg)](SUBSTITUA_PELO_SEU_LINK_AQUI)
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_svg.svg)]([https://log-proceappr-bnz6qx4n6m9frrpgk2yfnm.streamlit.app/])
 
 ---
 
