@@ -7,7 +7,6 @@ env/
 
 .streamlit/
 
-data/*.graphml
 data/*.db
 
 .vscode/
